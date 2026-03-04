@@ -1,0 +1,33 @@
+# Core ML/DL packages
+torch==2.5.0
+torchvision==0.20.0
+torchmetrics==1.5.1
+numpy==1.26.3
+
+# Computer vision
+opencv-python==4.10.0.84
+pillow==10.2.0
+scikit-image==0.24.0
+
+# Data handling
+datasets==3.0.2
+huggingface-hub==0.26.1
+pandas==2.2.3
+
+# Plotting and visualization
+matplotlib==3.9.2
+mlxtend==0.23.1
+
+# Utilities
+tqdm==4.66.5
+
+# Explainability (if needed)
+grad-cam==1.5.4
+lime==0.2.0.1
+
+# Model utilities
+timm==1.0.11
+
+# Scientific computing
+scikit-learn==1.5.2
+scipy==1.14.1
