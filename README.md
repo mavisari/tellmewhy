@@ -19,6 +19,10 @@ Two architectures were implemented and compared:
 - A pretrained ResNet50 model
 Both models were trained with and without early stopping, in order to evaluate the effect of training regularization on performance and computational efficiency. The final comparison considers both classification accuracy and explainability metrics, identifying the most reliable model for tumor detection.Particular attention is given to minimizing false negatives, i.e., cases in which a tumor is incorrectly classified as no tumor, due to their critical impact in clinical settings.
 
+<p align="center">
+  <img src="images/pred.png" width="500">
+</p>
+
 ## Project Structure
 The repository contains the following files:
 - ```python CNN.py ```: CNN model implementation
@@ -80,8 +84,17 @@ Special focus is placed on:
 - False negatives (tumor classified as no tumor)
 - Confusion between glioma and meningioma
 
+<p align="center">
+  <img src="images/accuracy comparison.png" width="400">
+   <img src="images/loss comparison.png" width="400">
+</p>
+
 ## Explainability - GradCAM Analysis 
 Grad-CAM (Gradient-weighted Class Activation Mapping) is an explainability technique used to visualize which regions of an input image contribute most to a model’s prediction. It computes the gradients of the predicted class score with respect to the feature maps of a convolutional layer and uses them to generate a heatmap highlighting the most relevant areas. In this project, Grad-CAM is used to verify whether the models focus on meaningful tumor regions in brain MRI images, improving interpretability and supporting the reliability of the classification results in a clinical context.
+
+<p align="center">
+  <img src="images/gradcam.png" width="500">
+</p>
 
 ## Quantitative Explainability Evaluation 
 Two sanity analyses were conducted: 
@@ -92,6 +105,14 @@ Pixels were removed in order of importance. The probability of correct classific
 - Glioma and meningioma are the most frequently confused classes.
 - No-tumor predictions are more stable.
 - ResNet50 shows better compactness and feature sensitivity.
+
+<p align="center">
+  <img src="images/incremental deletion.png" width="500">
+</p>
+
+<p align="center">
+  <img src="images/ID_comparison.png" width="500">
+</p>
 
 # How to Run the Project 
 1. Install dependencies
