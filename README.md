@@ -93,7 +93,7 @@ Special focus is placed on:
 Grad-CAM (Gradient-weighted Class Activation Mapping) is an explainability technique used to visualize which regions of an input image contribute most to a model’s prediction. It computes the gradients of the predicted class score with respect to the feature maps of a convolutional layer and uses them to generate a heatmap highlighting the most relevant areas. In this project, Grad-CAM is used to verify whether the models focus on meaningful tumor regions in brain MRI images, improving interpretability and supporting the reliability of the classification results in a clinical context.
 
 <p align="center">
-  <img src="images/gradcam.png" width="600">
+  <img src="images/gradcam.png" width="800">
 </p>
 
 ## Quantitative Explainability Evaluation 
