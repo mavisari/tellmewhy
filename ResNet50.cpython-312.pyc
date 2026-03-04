@@ -1,0 +1,49 @@
+import torch
+from torch import nn
+from torchvision.models import resnet50, ResNet50_Weights
+from huggingface_hub import hf_hub_download
+
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+class ResNet50(nn.Module):
+    def __init__(self, num_classes, pretrained=True):
+        super(ResNet50, self).__init__()
+        
+        # Initialize basic architecture
+        self.resnet = resnet50(weights=None)
+        
+        if pretrained:
+            try:
+                print("Downloading and loading RadImageNet weights...")
+                # Download the RadImageNet ResNet50 model from Hugging Face
+                repo_id = "Lab-Rasool/RadImageNet"
+                filename = "ResNet50.pt"
+                model_path = hf_hub_download(repo_id=repo_id, filename=filename)
+                
+                # Load the model
+                # RadImageNet provides a full model object in the .pt file
+                loaded_model = torch.load(model_path, map_location='cpu')
+                
+                if isinstance(loaded_model, nn.Module):
+                    self.resnet = loaded_model
+                elif isinstance(loaded_model, dict):
+                    # Fallback in case it's a state_dict
+                    self.resnet.load_state_dict(loaded_model, strict=False)
+                    
+            except Exception as e:
+                print(f"Warning: Failed to load RadImageNet weights ({e}).")
+                print("Falling back to ImageNet weights.")
+                self.resnet = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+
+        # Adjust the classification head for the specific number of classes
+        # Standard ResNet50 has 2048 input features for the final layer
+        if hasattr(self.resnet, 'fc') and isinstance(self.resnet.fc, nn.Linear):
+            in_features = self.resnet.fc.in_features
+        else:
+            in_features = 2048
+            
+        self.resnet.fc = nn.Linear(in_features, num_classes)
+    
+    def forward(self, x):
+        x = self.resnet(x)
+        return x
