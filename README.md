@@ -64,9 +64,7 @@ Early stopping reduced computational cost while maintaining equivalent performan
 ### ResNet50
 Pre-trained ResNet50 architecture adapted for 4-class classification. Two training strategies:
 1. Standard training (same parameters as CNN)
-2. Extended training with Early Stopping:
- - Epochs: 70
- - Patience: 20
+2. Extended training with Early Stopping: epochs: 70 and patience: 20
 
 The early stopping version demonstrated:
 - Better generalization
@@ -74,3 +72,44 @@ The early stopping version demonstrated:
 - Fewer false negatives
 - More stable training curves
 
+## Performance Evaluation 
+The following evaluation tools are implemented:
+1. Metrics: accuracy, loss, multiclass AUROC, Confusion Matrix
+2. Visualization: Training & testing loss curves, Accuracy curves, ROC curves, prediction grid visualization
+Special focus is placed on:
+- False negatives (tumor classified as no tumor)
+- Confusion between glioma and meningioma
+
+## Explainability - GradCAM Analysis 
+Grad-CAM (Gradient-weighted Class Activation Mapping) is an explainability technique used to visualize which regions of an input image contribute most to a model’s prediction. It computes the gradients of the predicted class score with respect to the feature maps of a convolutional layer and uses them to generate a heatmap highlighting the most relevant areas. In this project, Grad-CAM is used to verify whether the models focus on meaningful tumor regions in brain MRI images, improving interpretability and supporting the reliability of the classification results in a clinical context.
+
+## Quantitative Explainability Evaluation 
+Two sanity analyses were conducted: 
+### Model Parameters Randomization Check 
+Weights were randomly perturbed and heatmap correlation was computed. Lower correlation (in absolute value) indicates better behavior. ResNet50 showed stronger robustness.
+### Incremental Deletion 
+Pixels were removed in order of importance. The probability of correct classification dropped as relevant pixels were deleted. Findings:
+- Glioma and meningioma are the most frequently confused classes.
+- No-tumor predictions are more stable.
+- ResNet50 shows better compactness and feature sensitivity.
+
+# How to Run the Project 
+1. Install dependencies
+   ```bash
+   pip install -r requirements.txt
+   ````
+3. Set your HuggingFace token
+4. Open and run
+   ```bash
+   final_main_brain_colab.ipynb
+   ```` 
+   The notebook contains:
+   - dataset loading
+   - preprocessing
+   - model training
+   - evaluation
+   - GradCAM analysis
+   - quantitative explainability metrics
+
+# Authors 
+Neuroengineering 2025-2026, Francesco Cazzaniga, Pietro Dell'Acqua, Maria Vittoria Sari, Camilla Zago
